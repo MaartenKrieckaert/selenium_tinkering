@@ -24,7 +24,6 @@ log_dir = Path(path.abspath(path.join(path.dirname(__file__), '..', 'log')).repl
 version = 199001
 prep_steps = True
 schema = 'template'
-user_process = 'someuser'
 process = {"host": "etl-server03", "dbname": "process", "user": "geodbadmin", "password": "", "port": 5432}
 
 
