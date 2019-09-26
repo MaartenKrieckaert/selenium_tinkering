@@ -18,11 +18,11 @@
     "default": {
         "dstlib": {
             "hashes": [
-                "sha256:a360805e3b142014b7c1af04261cff3c497bfa12602999ec0f213bf2ccfb6a3f",
-                "sha256:ba9c5f140ce604a9fec8b94b87298da7ef67b72a96acdcdb78f3aac0e5b88197"
+                "sha256:94301dbe28cc4afc3acc868a5f599b253fbd22277dd252f10d0cd17276fce72b",
+                "sha256:a7dba805c6e4769a36248745335c51c1344a70928190c427c6c5e1b06da47fd4"
             ],
             "index": "geodan",
-            "version": "==0.0.1"
+            "version": "==0.1.0"
         },
         "psycopg2-binary": {
             "hashes": [
