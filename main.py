@@ -29,19 +29,10 @@ process = {"host": "etl-server03", "dbname": "process", "user": "geodbadmin", "p
 dbuser = 'geodb'
 
 
-def make_dir(directory: str) -> None:
-    """
-    Simple function for creating directories (and check if they exist)
-    Directories: list of strings of the paths to be created as directories
-    """
-    if not path.exists(directory):
-       makedirs(directory)
-
-
 def main() -> None:
     # Creating necessary directories
     for directory in [log_dir]:
-        make_dir(directory)
+        makedirs(directory, exist_ok=True)
 
     # create logger
     create_logger(f'{log_dir}/overall_log_{version}.log')
@@ -52,24 +43,23 @@ def main() -> None:
     logging.info('Creating database connection')
     connection = dstlib.connect_databases(process)
 
-
     # run steps
     for step in steps:
-
         logging.info(f"running step {step}")
+        # running SQL steps
         if steps[step].endswith(".sql"):
             logging.info(f'Executing query {steps[step]}')
-            step_query = (
-                open(f"{work_dir}\\sql\\{steps[step]}", encoding='utf-8-sig').read().format(version=version,
-                                                                                            schema=schema,
-                                                                                            dbadmin=process['user'],
-                                                                                            dbuser=dbuser))
+            with open(f"{work_dir}\\sql\\{steps[step]}", encoding='utf-8-sig') as f:
+                step_query = f.read().format(version=version, schema=schema, dbadmin=process['user'], dbuser=dbuser)
             dstlib.execute_query(connection, step_query)
 
         else:
             logging.info(f'Do something here')
 
         logging.info(f'Finished running step {step}')
+
+    # closing the connection
+    connection.close()
 
 
 if __name__ == '__main__':
