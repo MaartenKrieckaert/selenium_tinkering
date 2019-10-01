@@ -1,5 +1,5 @@
-# Configuration file Python processes
-# Make use of the examples below
+# Configuration file for Python processes
+# copy and save this file as config.yml and THEN fill out the passwords in your new file
 
 # general
 version: '199001'
