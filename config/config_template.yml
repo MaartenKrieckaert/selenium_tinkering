@@ -1,0 +1,23 @@
+# Configuration file Python processes
+# Make use of the examples below
+
+# general
+version: '199001'
+schema: 'template'
+db_user: 'geodb'
+work_dir: '\\etl-server01\Datatheek\Update_procedures\nederland\geodan\template\'
+
+# db parameters
+process:
+  host: 'etl-server03'
+  dbname: 'process'
+  user: 'geodbadmin'
+  port: 5432
+  password: 'fill_out_password_here'
+
+products:
+  host: 'etl-server02'
+  dbname: 'geodb'
+  user: 'geodbadmin'
+  port: 5432
+  password: 'fill_out_password_here'

@@ -128,3 +128,7 @@ dmypy.json
 /.idea/
 /python-template.iml
 
+# dst
+parameters.py
+config.yml
+
