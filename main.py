@@ -2,13 +2,14 @@
 # Description:  Template for a script running a data update
 
 import logging
-from logger import create_logger
-from os import path, makedirs, sep
+from python.logger import create_logger
+from python.config_parser import import_config
+from os import makedirs, path
 from datetime import timedelta
 from time import time
-from pathlib import Path
 from collections import OrderedDict
 import dstlib
+
 
 
 SCRIPT_START = time()
@@ -18,20 +19,24 @@ steps = OrderedDict([("1", "create_schema.sql"),
                      ("2", "something_else")])
 
 
-# parameters dummy
-# I want the log to be one level up. Keeps the git folder tidy (we need to discuss this)
-log_dir = Path(path.abspath(path.join(path.dirname(__file__), '..', 'log')).replace(sep, '/'))
-work_dir = Path(path.abspath(path.dirname(__file__)).replace(sep, '/'))
-version = 199001
-prep_steps = True
-schema = 'template'
-process = {"host": "etl-server03", "dbname": "process", "user": "geodbadmin", "password": "", "port": 5432}
-dbuser = 'geodb'
+# import parameters
+params = import_config()
+
+version = params['version']
+schema = params['schema']
+process = params['process']
+db_user = params['db_user']
+
+work_dir = f"{params['work_dir']}{version}"
+log_dir = f'{work_dir}\\log\\'
+data_dir = f'{work_dir}\\data\\'
+
+sql_dir = f'{path.join(path.dirname(__file__))}\\sql\\'
 
 
 def main() -> None:
     # Creating necessary directories
-    for directory in [log_dir]:
+    for directory in [log_dir, work_dir, data_dir]:
         makedirs(directory, exist_ok=True)
 
     # create logger
@@ -49,8 +54,8 @@ def main() -> None:
         # running SQL steps
         if steps[step].endswith(".sql"):
             logging.info(f'Executing query {steps[step]}')
-            with open(f"{work_dir}\\sql\\{steps[step]}", encoding='utf-8-sig') as f:
-                step_query = f.read().format(version=version, schema=schema, dbadmin=process['user'], dbuser=dbuser)
+            with open(f"{sql_dir}{steps[step]}", encoding='utf-8-sig') as f:
+                step_query = f.read().format(version=version, schema=schema, dbadmin=process['user'], dbuser=db_user)
             dstlib.execute_query(connection, step_query)
 
         else:
