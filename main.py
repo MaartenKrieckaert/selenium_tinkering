@@ -3,12 +3,13 @@
 
 import logging
 from python.logger import create_logger
+from python.config_parser import import_config
 from os import makedirs, path
 from datetime import timedelta
 from time import time
 from collections import OrderedDict
 import dstlib
-import yaml
+
 
 
 SCRIPT_START = time()
@@ -18,9 +19,8 @@ steps = OrderedDict([("1", "create_schema.sql"),
                      ("2", "something_else")])
 
 
-# Parameters
-with open('config/config.yml') as f:
-    params = yaml.safe_load(f)
+# import parameters
+params = import_config()
 
 version = params['version']
 schema = params['schema']
