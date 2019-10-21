@@ -4,6 +4,7 @@ url = "https://repo.geodan.io/repository/python/simple"
 verify_ssl = true
 
 [dev-packages]
+mypy = "*"
 
 [packages]
 dstlib = "*"
