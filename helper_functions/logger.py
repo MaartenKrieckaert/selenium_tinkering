@@ -1,7 +1,6 @@
 # Title:        logger.py
 # Description:  Contains a function for creating a basic config for a logger
 
-# import stuff
 import logging
 
 
