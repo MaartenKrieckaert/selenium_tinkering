@@ -21,10 +21,6 @@ steps = OrderedDict([("1", "create_schema.sql"),
 # import parameters
 params = import_config()
 
-# databases
-process = params['process']
-products = params['products']
-
 # directories
 work_dir = f"{params['work_dir']}{params['version']}"
 log_dir = f'{work_dir}\\log\\'
@@ -44,7 +40,7 @@ def main() -> None:
 
     # create database connection
     logging.info('Creating database connection')
-    connection = dstlib.connect_databases(process)
+    connection = dstlib.connect_databases(params['process'])
 
     # run steps
     for step in steps:
@@ -55,7 +51,7 @@ def main() -> None:
             with open(f"{sql_dir}{steps[step]}", encoding='utf-8-sig') as f:
                 step_query = f.read().format(version=params['version'],
                                              schema=params['schema'],
-                                             dbadmin=process['user'],
+                                             dbadmin=params['process']['user'],
                                              dbuser=params['db_user'])
             dstlib.execute_query(connection, step_query)
 
@@ -72,4 +68,3 @@ if __name__ == '__main__':
     main()
     runtime = time() - SCRIPT_START
     logging.info(f'Script finished in {(timedelta(seconds=runtime))} seconds')
-
