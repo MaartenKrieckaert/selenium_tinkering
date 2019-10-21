@@ -1,11 +1,11 @@
 # Title:        config_parser.py
 # Description:  Contains a function for loading a yaml configuration file
-from typing import Dict, Union
+from typing import Dict
 
 import yaml
 
 
-def import_config(config: str = 'config.yml') -> Dict[str, Union[str, Dict[str, str]]]:
+def import_config(config: str = 'config.yml') -> Dict[str, dict]:
     """
     Function for importing the parameter file
     :param config: normally you shouldn't have to change this value.
