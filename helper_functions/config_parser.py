@@ -7,9 +7,9 @@ import sys
 
 
 # function for importing the parameter file
-def import_config(config: str = 'config/config.yml') -> dict:
+def import_config(config: str = 'config.yml') -> dict:
     """
-    :param config: normaly you shouldn't change this value. Rename the config file instead
+    :param config: normally you shouldn't change this value. Rename the config file instead
     :return: your parameters
     """
 
