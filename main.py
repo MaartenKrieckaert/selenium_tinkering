@@ -7,16 +7,25 @@ from helper_functions.config_parser import import_config
 from os import makedirs, path
 from datetime import timedelta
 from time import time
-from collections import OrderedDict
+from typing import List
 import dstlib
 
 
 SCRIPT_START = time()
 
 # define steps here
-steps = OrderedDict([("1", "create_schema.sql"),
-                     ("2", "something_else")])
-
+steps: List[dict] = [
+    {
+        'command': 'create_schema.sql',
+        'description': 'Creating the schema for further data processing',
+        'returned_result': None
+    },
+    {
+        'command': 'something_else',
+        'description': 'Dummy for a step executing "something"',
+        'returned_result': None
+    }
+]
 
 # import parameters
 params = import_config()
@@ -44,11 +53,11 @@ def main() -> None:
 
     # run steps
     for step in steps:
-        logging.info(f"running step {step}")
+        logging.info(f"running step {step['command']} ({step['description']})")
         # running SQL steps
-        if steps[step].endswith(".sql"):
-            logging.info(f'Executing query {steps[step]}')
-            with open(f"{sql_dir}{steps[step]}", encoding='utf-8-sig') as f:
+        if step['command'].endswith(".sql"):
+            logging.info(f"Executing query {step['command']}")
+            with open(f"{sql_dir}{step['command']}", encoding='utf-8-sig') as f:
                 step_query = f.read().format(version=params['version'],
                                              schema=params['schema'],
                                              dbadmin=params['process']['user'],
@@ -58,7 +67,7 @@ def main() -> None:
         else:
             logging.info(f'Do something here')
 
-        logging.info(f'Finished running step {step}')
+        logging.info(f"Finished running step {step['command']}")
 
     # closing the connection
     connection.close()
