@@ -30,6 +30,10 @@ steps: List[dict] = [
 # import parameters
 params = import_config()
 
+# database parameters
+process = params['process']
+
+
 # directories
 work_dir = f"{params['work_dir']}{params['version']}"
 log_dir = f'{work_dir}\\log\\'
@@ -49,7 +53,7 @@ def main() -> None:
 
     # create database connection
     logging.info('Creating database connection')
-    connection = dstlib.connect_databases(params['process'])
+    connection = dstlib.connect_databases(process)
 
     # run steps
     for step in steps:
