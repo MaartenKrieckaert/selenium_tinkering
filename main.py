@@ -36,9 +36,9 @@ process = params['process']
 
 # directories
 work_dir = f"{params['work_dir']}{params['version']}"
-log_dir = f'{work_dir}\\log\\'
-data_dir = f'{work_dir}\\data\\'
-sql_dir = f'{path.join(path.dirname(__file__))}\\sql\\'
+log_dir = f'{work_dir}/log/'
+data_dir = f'{work_dir}/data/'
+sql_dir = f'{path.join(path.dirname(__file__))}/sql/'
 
 
 def main() -> None:
