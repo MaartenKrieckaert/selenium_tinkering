@@ -10,7 +10,7 @@ def create_logger(log_file: str) -> None:
     logging.basicConfig(
         level=logging.INFO,
         format='%(asctime)s %(levelname)s %(message)s',
-        datefmt='%m/%d/%Y %I:%M:%S',
+        datefmt='%d/%m/%Y %I:%M:%S',
         handlers=[
             logging.FileHandler(log_file),
             logging.StreamHandler()
