@@ -30,7 +30,7 @@ sql_dir = f'{path.join(path.dirname(__file__))}/sql/'
 steps: List[dict] = [
     {
         'command': execute_step_query,
-        'args': [sql_dir, 'create_schema.sql', params['version'], params['schema'], process['user'], params['db_user']],
+        'args': [f'{sql_dir}create_schema.sql', params['version'], params['schema'], process['user'], params['db_user']],
         'description': 'Creating the schema for further data processing',
         'returned_result': None
     },
