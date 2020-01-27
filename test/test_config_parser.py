@@ -14,7 +14,7 @@ class TestConfigParser(unittest.TestCase):
                 import_config('config_template.yml')
 
         with self.subTest('It successfully parses an example config'):
-            config = import_config('test_config.yml')
+            config = import_config('test/test_config.yml')
             self.assertEqual(config['version'], '199001')
             self.assertEqual(config['process']['user'], 'geodbadmin')
 
