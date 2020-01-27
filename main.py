@@ -61,13 +61,15 @@ def main() -> None:
     for step in steps:
         logging.info(f"running step {step['command'].__name__} ({step['description']})")
 
-        # In case the connection is needed
-        if step['command'].__name__ == 'execute_step_query':
-            step['command'](connection, *step['args'])
+        # by default use only the arguments from the dict.
+        step_args = step['args']
 
-        # any other processing step
-        else:
-            step['command'](*step['args'])
+        # In case the connection is needed, add the connection to the arguments
+        if step['command'].__name__ == 'execute_step_query':
+            step_args = [connection, *step_args]
+
+        # Execute step
+        step['command'](*step_args)
 
         logging.info(f"Finished running step {step['command'].__name__}")
 
