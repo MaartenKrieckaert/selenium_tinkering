@@ -5,6 +5,14 @@ import logging
 
 
 def create_logger(log_file: str) -> None:
+
+    # If you try to log before creating the basicconfig it will not create it.
+    # Strange implementation of the logging module...
+    root = logging.getLogger()
+    if root.handlers:
+        for handler in root.handlers:
+            root.removeHandler(handler)
+
     # Creating log file and -stream
     logging.getLogger()
     logging.basicConfig(
